@@ -1,5 +1,5 @@
 #Part One
-"""
+
 from sklearn.datasets import fetch_california_housing
 cali = fetch_california_housing()
 
@@ -16,7 +16,7 @@ grid = sns.pairplot(data=cali_df, vars=cali_df.columns)
 
 import matplotlib.pyplot as plt
 plt.show()
-"""
+
 
 
 #Part Two
@@ -36,14 +36,40 @@ random_state=11)
 
 from sklearn.linear_model import LinearRegression
 
-linear_regresion = LinearRegression()
+linear_regression = LinearRegression()
 
-linear_regresion.fit(X=X_train, y=y_train)
+linear_regression.fit(X=X_train, y=y_train)
 
-predicted = linear_regresion.predict(X_test)
+predicted = linear_regression.predict(X_test)
 
 expected = y_test
 
 for p, e in zip(predicted[::5], expected[::5]):
     print(f'predicted: {p:.2f}, expected: {e:.2f}')
 
+
+predict = (lambda x: linear_regression.coef_ * x + linear_regression.intercept_)
+
+import seaborn as sns1
+
+axes = sns1.scatterplot(data=nyc, x='Date', y='Temperature', hue='Temperature', 
+palette='winter', legend=False)
+
+axes.set_ylim(10, 70)
+
+import numpy as np
+
+x = np.array([min(nyc.Date.values), max(nyc.Date.values)])
+
+y = predict(x)
+
+import matplotlib.pyplot as plt1
+
+line = plt1.plot(x, y)
+
+plt1.show()
+
+
+""" unsure how to answer question about january temperatures;
+csv file only includes data on yearly temperatures.
+"""
